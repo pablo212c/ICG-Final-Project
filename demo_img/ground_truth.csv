@@ -1,0 +1,6 @@
+﻿"demo_filename","alias","original_filename","true_score","previous_test_pred_score"
+"img1.jpg","img1","farm1_561_19920327009_5bbbf6f866_b.jpg","0.8","0.836"
+"img2.jpg","img2","farm1_404_20145050700_015387cc98_b.jpg","0.5","0.484"
+"img3.jpg","img3","farm1_302_19521402224_a52429e46f_b.jpg","0.45","0.398"
+"img4.jpg","img4","farm1_375_20130719655_b2b8217ff5_b.jpg","0.25","0.253"
+"img5.jpg","img5","farm1_505_19709288534_becbc3cf32_b.jpg","0.05","0.082"
