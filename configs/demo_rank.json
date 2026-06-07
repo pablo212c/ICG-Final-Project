@@ -1,0 +1,14 @@
+{
+  "checkpoint": "checkpoints/best.pt",
+  "image_root": ".",
+  "images": [
+    "demo_img/img1.jpg",
+    "demo_img/img2.jpg",
+    "demo_img/img3.jpg",
+    "demo_img/img4.jpg",
+    "demo_img/img5.jpg"
+  ],
+  "device": "auto",
+  "tta_views": 10,
+  "json": false
+}
