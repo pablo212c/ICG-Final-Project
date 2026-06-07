@@ -1,5 +1,9 @@
 # ICG Photo Ranking
+## Report & Demo
 
+- [Final Report](report.pdf)
+- [Demo Video](https://drive.google.com/file/d/17_51E5atojJn9OGpRAJdKpmYylmlYpK1/view?usp=drive_link)
+  
 ## Instruction
 
 ```bash
