@@ -19,15 +19,15 @@ Stop-Process -Id <PID>
 ```
 
 ```bash
-python rank.py --demo all
-python explain.py
+python scripts/rank.py --demo all
+python scripts/explain.py
 ```
 
 Run subset of photos:
 
 ```bash
-python rank.py --demo img1 img3 img5
-python explain.py
+python scripts/rank.py --demo img1 img3 img5
+python scripts/explain.py
 ```
 
 Run your own photos:
@@ -35,19 +35,19 @@ Run your own photos:
 You NEED to put photos in `img/`.
 
 ```bash
-python rank.py --images imgA.jpg imgB.jpg
-python rank.py --images imgC.jpg imgD.jpg
-python explain.py
+python scripts/rank.py --images imgA.jpg imgB.jpg
+python scripts/rank.py --images imgC.jpg imgD.jpg
+python scripts/explain.py
 ```
 
 `rank.py` writes `outputs/rank_llm_input.json` automatically. `explain.py` reads that file and writes the full local LLM explanation to `outputs/rank_explanation.txt`.
 
 Your own photos do not need true labels. `demo_img/ground_truth.csv` is only for showing that the prepared demo ranking matches AADB labels.
 
-Before a live demo, run `python explain.py` once so the GGUF model is already downloaded into `.model_cache/`. During the demo, use this if you want to avoid downloading:
+Before a live demo, run `python scripts/explain.py` once so the GGUF model is already downloaded into `.model_cache/`. During the demo, use this if you want to avoid downloading:
 
 ```bash
-python explain.py --local-files-only
+python scripts/explain.py --local-files-only
 ```
 
 Photo aesthetic ranking prototype for AADB. The current repository contains only the code needed to train, test, and run ranking inference. Datasets, checkpoints, predictions, PDFs, and MATLAB reference files are intentionally ignored by git.
@@ -67,22 +67,19 @@ Implemented:
 - color harmony structured features for downstream explanation
 - JSON payload suitable for a future LLM explanation step
 - local GGUF LLM explanation with Qwen3.5-9B-Q4_K_M
-
-Not finished:
-
-- deeper color harmony validation or ablation
+- deeper color harmony ablation
 
 ## Repository Layout
 
 ```text
-train.py                    train/test the model
-rank.py                     rank 2-5 images and export explanation-ready JSON
-explain.py                  generate natural-language explanation from rank JSON
-app.py                      Gradio UI for upload, ranking, and fast explanation
+app.py                      Gradio UI (entry point at project root)
+scripts/train.py            train/test the model
+scripts/rank.py             rank 2-5 images and export explanation-ready JSON
+scripts/explain.py          generate natural-language explanation from rank JSON
+src/                        dataset, model, metrics, inference, transforms, color harmony
 configs/ema_s.json          main training config
 configs/test_tta.json       final test config
 configs/rank_example.json   example ranking config
-src/          dataset, model, metrics, inference, transforms, color harmony
 requirements.txt            Python dependencies
 ```
 
@@ -114,15 +111,15 @@ pip install -r requirements.txt
 Default training uses `configs/ema_s.json`.
 
 ```bash
-python train.py
+python scripts/train.py
 ```
 
 Useful overrides:
 
 ```bash
-python train.py --epochs 40
-python train.py --batch-size 8
-python train.py --checkpoint-policy auto
+python scripts/train.py --epochs 40
+python scripts/train.py --batch-size 8
+python scripts/train.py --checkpoint-policy auto
 ```
 
 The default checkpoint path is:
@@ -136,7 +133,7 @@ checkpoints/best.pt
 Default test uses `configs/test_tta.json`.
 
 ```bash
-python train.py --test
+python scripts/train.py --test
 ```
 
 For 5-image group ranking, the config uses:
@@ -154,46 +151,46 @@ The same checkpoint, seed, group size, and group count produce deterministic gro
 Put your own photos in `img/`, then rank by filename:
 
 ```bash
-python rank.py --images imgA.jpg imgB.jpg
+python scripts/rank.py --images imgA.jpg imgB.jpg
 ```
 
 Your own photos do not need true labels. You can also pass relative or absolute paths directly:
 
 ```bash
-python rank.py --images other_folder/my_photo1.jpg other_folder/my_photo2.jpg
-python explain.py
+python scripts/rank.py --images other_folder/my_photo1.jpg other_folder/my_photo2.jpg
+python scripts/explain.py
 ```
 
 Print JSON:
 
 ```bash
-python rank.py --config configs/rank_example.json --json
+python scripts/rank.py --config configs/rank_example.json --json
 ```
 
 Write downstream LLM input without running an LLM:
 
 ```bash
-python rank.py --images imgA.jpg imgB.jpg
+python scripts/rank.py --images imgA.jpg imgB.jpg
 ```
 
 Run the locally prepared demo group:
 
 ```bash
-python rank.py --demo all
-python explain.py
+python scripts/rank.py --demo all
+python scripts/explain.py
 ```
 
 Run a selected subset of 2-5 demo images:
 
 ```bash
-python rank.py --demo img1 img2 img5
-python explain.py
+python scripts/rank.py --demo img1 img2 img5
+python scripts/explain.py
 ```
 
 Generate a local LLM explanation without an API key:
 
 ```bash
-python explain.py
+python scripts/explain.py
 ```
 
 Default input: `outputs/rank_llm_input.json`
@@ -210,26 +207,26 @@ The program first searches for an existing GGUF file in `.model_cache/`. It down
 Run only from already downloaded model files:
 
 ```bash
-python explain.py --local-files-only
+python scripts/explain.py --local-files-only
 ```
 
 Fallback to the previous Hugging Face Transformers 4B backend:
 
 ```bash
-python explain.py --provider local
+python scripts/explain.py --provider local
 ```
 
 Inspect the prompt without loading a model:
 
 ```bash
-python explain.py --dry-run
+python scripts/explain.py --dry-run
 ```
 
 Cloud providers remain optional:
 
 ```bash
-python explain.py --provider openai --input outputs/rank_llm_input.json
-python explain.py --provider anthropic --input outputs/rank_llm_input.json
+python scripts/explain.py --provider openai --input outputs/rank_llm_input.json
+python scripts/explain.py --provider anthropic --input outputs/rank_llm_input.json
 ```
 
 Cloud mode requires the corresponding package and API key.
@@ -271,4 +268,3 @@ Notes:
 
 - Higher is better for Spearman, Kendall, pairwise accuracy, top1 accuracy, group Spearman, group Kendall, and group rank score.
 - Lower is better for MSE, MAE, and attribute MAE.
-
