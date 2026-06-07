@@ -105,7 +105,12 @@ test        1000 images
 ```bash
 pip install -r requirements.txt
 ```
+  
+Download the pretrained checkpoint (~190 MB) and place it at
+`checkpoints/best.pt`:
 
+- [best.pt (Google Drive)](https://drive.google.com/file/d/1bNGufdCycLFy0nEKt9YDLAwDs1u6lltV/view?usp=drive_link)
+  
 ## Train
 
 Default training uses `configs/ema_s.json`.
