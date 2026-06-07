@@ -1,0 +1,15 @@
+{
+  "images": "datasetImages_warp256",
+  "labels": "imgListFiles_label",
+  "checkpoint": "checkpoints/best.pt",
+  "test": true,
+  "split": "test",
+  "batch_size": 8,
+  "num_workers": 0,
+  "device": "auto",
+  "predictions_csv": "outputs/test_predictions_tta.csv",
+  "group_eval": true,
+  "group_size": 5,
+  "group_count": 1000,
+  "tta_views": 10
+}

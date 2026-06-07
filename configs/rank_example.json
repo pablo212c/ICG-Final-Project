@@ -1,0 +1,11 @@
+{
+  "checkpoint": "checkpoints/best.pt",
+  "image_root": "img",
+  "images": [
+    "imgA.jpg",
+    "imgB.jpg"
+  ],
+  "device": "auto",
+  "tta_views": 10,
+  "json": false
+}
