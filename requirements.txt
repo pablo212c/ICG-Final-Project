@@ -1,0 +1,15 @@
+--extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu124
+
+torch
+torchvision
+numpy
+Pillow
+opencv-python
+scipy
+gradio
+llama-cpp-python==0.3.22
+huggingface-hub
+transformers
+accelerate
+bitsandbytes
+
